@@ -17,5 +17,5 @@ joblib.dump(scaler, "models/minmax_scaler.joblib")
 
 processed = pd.DataFrame(X_scaled, columns=[c + "_scaled" for c in feature_cols])
 processed["yield_kg"] = y.values
-
 processed.to_parquet("data/processed/features.parquet", index=False)
+print(processed.head())
