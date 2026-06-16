@@ -131,7 +131,6 @@ Linear Regression was selected as the champion model because it achieved the low
 A prediction script was created to load the saved champion model and generate mushroom yield predictions from new sensor readings. The predict_yield() function uses temperature, humidity, and CO₂ values as input and returns the predicted yield. Feature order was maintained using feature_cols.json to ensure consistency between training and inference. The model was successfully loaded without retraining and produced a sample prediction of 17.96 kg.
 
 Saved Artifacts:
-
 * models/champion.joblib
 * models/feature_cols.json
 * src/predict.py
