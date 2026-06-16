@@ -13,8 +13,8 @@ Features:
 - co2_ppm
 
 Train/Test Split:
-- Training rows: XXX
-- Testing rows: XXX
+- Training rows: 288
+- Testing rows: 72
 - Train period: 2024-01-01 to 2024-10-18
 - Test period: 2024-10-19 to 2024-12-30
 
@@ -97,3 +97,41 @@ Linear Regression achieved a lower average MAE than Random Forest.
 Linear Regression showed lower variation across folds.
 No test data was used during cross-validation.
 TimeSeriesSplit preserved chronological order and prevented data leakage.
+
+## Task 7: Hyperparameter Tuning, Model Comparison & Metric Selection
+
+GridSearchCV with TimeSeriesSplit cross-validation was used to tune the Random Forest model. The best hyperparameters obtained were max_depth = 8, min_samples_leaf = 5, and n_estimators = 100. The tuned model achieved a CV MAE of 0.463, a Test MAE of 0.467, and a Test R² of 0.312.
+
+### Model Comparison
+
+| Model               | Test MAE | Test R² |
+| ------------------- | -------- | ------- |
+| Linear Regression   | 0.42     | 0.427   |
+| Random Forest       | 0.48     | 0.31    |
+| Tuned Random Forest | 0.467    | 0.312   |
+
+### Champion Model
+
+Linear Regression was selected as the champion model because it achieved the lowest test MAE and demonstrated more stable performance during cross-validation compared to both Random Forest models.
+
+### Saved Artifacts
+
+* models/rf_best_params.json
+* models/champion.joblib
+* reports/figures/pred_vs_actual.png
+
+### Limitations
+
+* The dataset covers a limited time period.
+* Sensor readings may contain noise and measurement errors.
+* Model performance may vary across different seasons.
+* Predictions may be less reliable outside the observed sensor ranges.
+## Model Persistence & Reproducibility
+
+A prediction script was created to load the saved champion model and generate mushroom yield predictions from new sensor readings. The predict_yield() function uses temperature, humidity, and CO₂ values as input and returns the predicted yield. Feature order was maintained using feature_cols.json to ensure consistency between training and inference. The model was successfully loaded without retraining and produced a sample prediction of 17.96 kg.
+
+Saved Artifacts:
+
+* models/champion.joblib
+* models/feature_cols.json
+* src/predict.py

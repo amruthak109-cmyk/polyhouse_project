@@ -1,12 +1,23 @@
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import joblib
+import json
 
 df = pd.read_parquet("data/processed/02_cleaned.parquet").sort_values("timestamp")
 
 df["temp_humid_interaction"] = df["temperature_c"] * df["humidity_pct"] / 100
 
-feature_cols = ["temperature_c", "humidity_pct", "co2_ppm", "temp_humid_interaction"]
+feature_cols = [
+    "temperature_c",
+    "humidity_pct",
+    "co2_ppm",
+    "temp_humid_interaction"
+]
+
+# Save feature order for inference
+with open("models/feature_cols.json", "w") as f:
+    json.dump(feature_cols, f, indent=2)
+
 X = df[feature_cols]
 y = df["yield_kg"]
 
@@ -15,7 +26,17 @@ X_scaled = scaler.fit_transform(X)
 
 joblib.dump(scaler, "models/minmax_scaler.joblib")
 
-processed = pd.DataFrame(X_scaled, columns=[c + "_scaled" for c in feature_cols])
+processed = pd.DataFrame(
+    X_scaled,
+    columns=[c + "_scaled" for c in feature_cols]
+)
+
 processed["yield_kg"] = y.values
-processed.to_parquet("data/processed/features.parquet", index=False)
+
+processed.to_parquet(
+    "data/processed/features.parquet",
+    index=False
+)
+
 print(processed.head())
+print("Saved: models/feature_cols.json")
