@@ -134,3 +134,16 @@ Saved Artifacts:
 * models/champion.joblib
 * models/feature_cols.json
 * src/predict.py
+## Task 8: Streamlit Yield Forecast App
+
+A Streamlit web application was developed to predict oyster mushroom yield using environmental sensor readings.
+
+Features:
+- Sidebar sliders for Temperature, Humidity and CO₂
+- Champion model loaded for prediction
+- Predict Yield button
+- Estimated daily yield displayed in kilograms
+
+Run the app:
+
+streamlit run src/app.py
