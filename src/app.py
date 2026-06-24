@@ -1,3 +1,4 @@
+from logger import log_prediction
 import streamlit as st
 from predict import predict_yield
 
@@ -6,13 +7,13 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("🍄 Polyhouse Yield Predictor")
+st.title(" 🍄 Polyhouse Yield Predictor")
 
 st.caption(
     "Predict oyster mushroom yield using environmental sensor readings"
 )
 
-# Sidebar Inputs
+# Sidebar
 with st.sidebar:
 
     st.header("Sensor Readings")
@@ -40,18 +41,28 @@ with st.sidebar:
         value=900,
         step=10
     )
-st.write("Temperature:", temp)
-st.write("Humidity:", humid)
-st.write("CO2:", co2)
+
 if st.button("Predict Yield"):
 
-    prediction = predict_yield(
-        temp,
-        humid,
-        co2
-    )
+    with st.spinner("Predicting mushroom yield..."):
+        prediction = predict_yield(
+            temp,
+            humid,
+            co2
+        )
+
+    st.success("Prediction completed!")
 
     st.metric(
         label="Estimated Daily Yield",
         value=f"{prediction:.2f} kg"
     )
+    
+prediction = predict_yield(temp, humid, co2)
+
+log_prediction(
+    temp,
+    humid,
+    co2,
+    prediction
+)
