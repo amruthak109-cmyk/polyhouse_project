@@ -131,6 +131,7 @@ Linear Regression was selected as the champion model because it achieved the low
 A prediction script was created to load the saved champion model and generate mushroom yield predictions from new sensor readings. The predict_yield() function uses temperature, humidity, and CO₂ values as input and returns the predicted yield. Feature order was maintained using feature_cols.json to ensure consistency between training and inference. The model was successfully loaded without retraining and produced a sample prediction of 17.96 kg.
 
 Saved Artifacts:
+
 * models/champion.joblib
 * models/feature_cols.json
 * src/predict.py
@@ -147,3 +148,59 @@ Features:
 Run the app:
 
 streamlit run src/app.py
+
+## Task 9: Cloud Deployment & Monitoring
+
+The Mushroom Yield Forecast application was prepared for cloud deployment using Streamlit Community Cloud. All required Python dependencies were listed in `requirements.txt` to ensure reproducible deployment. Prediction logging was integrated into the application to record each prediction for future monitoring and analysis.
+
+### Monitoring
+
+Prediction logs are stored in:
+
+* `logs/predictions.csv`
+
+Each prediction record contains:
+
+* Timestamp (UTC)
+* Temperature (°C)
+* Humidity (%)
+* CO₂ (ppm)
+* Predicted Yield (kg)
+
+A monitoring plan was documented to identify data drift and determine when model retraining is required.
+
+### Deployment Files
+
+* `requirements.txt`
+* `src/app.py`
+* `src/logger.py`
+* `docs/monitoring.md`
+
+---
+
+## Task 10: Technical Report & Capstone Presentation
+
+A complete technical report and capstone presentation were prepared to summarize the entire machine learning pipeline developed during the internship.
+
+The report includes:
+
+* Problem statement
+* Dataset description
+* Data cleaning and preprocessing
+* Exploratory Data Analysis (EDA)
+* Feature engineering
+* Model development and evaluation
+* Streamlit application
+* Cloud deployment
+* Monitoring strategy
+* Limitations and future work
+
+Presentation slides were also created to demonstrate the complete workflow, model results, deployment, and project outcomes.
+
+### Final Deliverables
+
+* `reports/final_report.md`
+* Presentation (`.pptx`)
+* GitHub Repository
+* Streamlit Deployment
+* Project Documentation
